@@ -39,13 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ITwitterClientService.cs" />
     <Compile Include="ILogger.cs" />
-    <Compile Include="ITwitterClientConnection.cs" />
+    <Compile Include="ITwitterHandler.cs" />
     <Compile Include="ListenerStatus.cs" />
     <Compile Include="ServerStatus.cs" />
     <Compile Include="ITwitterListener.cs" />
     <Compile Include="ITwitterServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\TwitterHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Twitter.Model\Twitter.Model.csproj">

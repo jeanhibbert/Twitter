@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TcpUtils;
 using Twitter.Contracts;
-using TwitterTcpClientConsole.Services;
 
 namespace TwitterTcpClientConsole
 {
@@ -13,10 +13,10 @@ namespace TwitterTcpClientConsole
         static void Main(string[] args)
         {
             Console.WriteLine("Opening connection...");
-            using (ITwitterClientConnection connection = new TwitterTcpClientConnection("localhost", 10101))
+            using (ITwitterClientService connection = new TcpClientService(10101, "localhost", new ConsoleLogger()))
             {
                 connection.OnMessageRecieved.Subscribe(ReceiveMessage);
-                connection.Open();
+                connection.Start();
                 Console.WriteLine("Connection opened.");
                 Console.WriteLine("Type 'exit' to close connection.");
 

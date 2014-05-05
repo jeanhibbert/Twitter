@@ -9,25 +9,24 @@ using System.Threading.Tasks;
 using TcpUtils;
 using Twitter.Contracts;
 using Twitter.Model;
-using Twitter.Model.Contracts;
 
 namespace TwitterTcpServerConsole.Services
 {
     public class TwitterTcpListener : ITwitterListener
     {
 
-        private readonly ConcurrentDictionary<string, ITwitterClient> _twitterClients = new ConcurrentDictionary<string, ITwitterClient>();
+        private readonly ITwitterHandler _twitterHandler;
         private readonly TcpEndPointDetails _tcpEndpointDetails;
+        private readonly ILogger _logger;
+
+        private ListenerStatus _listenerStatus = ListenerStatus.Stopped;
         private TcpListener _tcpListener;
 
-        public TwitterTcpListener(TcpEndPointDetails tcpEndpointDetails)
+        public TwitterTcpListener(TcpEndPointDetails tcpEndpointDetails, ITwitterHandler twitterHandler, ILogger logger)
         {
             _tcpEndpointDetails = tcpEndpointDetails;
-        }
-
-        public IDictionary<string, ITwitterClient> TwitterClients
-        {
-            get { return _twitterClients; }
+            _twitterHandler = twitterHandler;
+            _logger = logger;
         }
 
         public void Start()
@@ -39,14 +38,16 @@ namespace TwitterTcpServerConsole.Services
                 TcpClient tcpClient = null;
                 while ((tcpClient = _tcpListener.AcceptTcpClient()) != null)
                 {
-                    ITwitterClient twitterClient = new TwitterTcpClient(this, new TcpClientService(tcpClient));
-                    //_twitterClients.AddOrUpdate(twitterClient.Name, twitterClient, (x.Name, x) => x);
+                    ITwitterClientService twitterClient = new TcpClientService(tcpClient, _logger);
+                    _twitterHandler.TwitterClients.AddOrUpdate(twitterClient.Name, _ => twitterClient, (n, tc) => tc);
                     twitterClient.Start();
+                    _logger.LogMessage("Listener added new Tcp Client : " + twitterClient.Name);
                 }
+                _listenerStatus = ListenerStatus.Started;
             }
             catch (SocketException ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogException("Start - Listener: ", ex);
             }
         }
 
@@ -54,13 +55,15 @@ namespace TwitterTcpServerConsole.Services
         {
             if (_tcpListener != null)
             {
+                _twitterHandler.Dispose();
                 _tcpListener.Stop();
             }
+            _listenerStatus = ListenerStatus.Stopped;
         }
 
         public ListenerStatus Status
         {
-            get { throw new NotImplementedException(); }
+            get { return _listenerStatus; }
         }
     }
 }

@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Twitter.Model.Contracts
+namespace Twitter.Contracts
 {
-    public interface ITwitterClient : IDisposable
+    public interface ITwitterClientService : IDisposable
     {
         void Start();
+        IObservable<string> OnMessageRecieved {get;}
+        void Send(string message);
         string Name { get; set; }
-        bool Connected { get; set; }
     }
 }

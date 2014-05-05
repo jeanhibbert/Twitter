@@ -7,31 +7,44 @@ using System.Reactive.Subjects;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Twitter.Contracts;
 
 namespace TcpUtils
 {
-    public class TcpClientService : IDisposable
+    public class TcpClientService : ITwitterClientService
     {
         private readonly TcpClient _client;
         private NetworkStream _networkStream;
         private StreamReader _reader;
         private StreamWriter _writer;
-        private ISubject<string> _stream;
+        private ISubject<string> _stream = new Subject<string>();
+        private string _Name = Guid.NewGuid().ToString();
 
-        public TcpClientService(TcpClient tcpClient)
+        private readonly ILogger _logger;
+
+        public TcpClientService(TcpClient tcpClient, ILogger logger)
         {
             this._client = tcpClient;
+            _logger = logger;
         }
 
-        public TcpClientService(int port, string host)
+        public TcpClientService(int port, string host, ILogger logger)
         {
             this._client = new TcpClient(host, port);
+            _logger = logger;
         }
 
-        #region IMessagingService Members
+        #region ITwitterClientService Members
+
+        public string Name
+        {
+            get { return _Name; }
+            set { _Name = value; }
+        }
 
         public void Start()
         {
+            _logger.LogMessage(_Name + " starting...");
             this._stream = new Subject<string>();
             Thread thread = new Thread(new ThreadStart(this.Run));
             this._networkStream = this._client.GetStream();
@@ -45,6 +58,7 @@ namespace TcpUtils
             String line = null;
             while ((line = this._reader.ReadLine()) != null)
             {
+                _logger.LogMessage(_Name + " recieved : " + line);
                 this._stream.OnNext(line);
             }
         }
@@ -59,6 +73,7 @@ namespace TcpUtils
 
         public void Send(string message)
         {
+            _logger.LogMessage(_Name + " sending : " + message);
             this._writer.WriteLine(message);
             this._writer.Flush();
         }

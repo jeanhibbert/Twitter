@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using TcpUtils;
 using Twitter;
 using Twitter.Contracts;
 
@@ -10,31 +12,40 @@ namespace TwitterTcpServerConsole.Services
 {
     public class TwitterTcpServer : ITwitterServer
     {
-        private TcpUtils.TcpEndPointDetails tcpEndPointDetails;
+        private readonly TcpEndPointDetails _tcpEndPointDetails;
+        private readonly ITwitterListener _twitterListener;
+        
+        private ServerStatus _serverStatus = ServerStatus.Stopped;
+        private Thread _thread;
 
-        public TwitterTcpServer(TcpUtils.TcpEndPointDetails tcpEndPointDetails)
+        public TwitterTcpServer(TcpEndPointDetails tcpEndPointDetails, ITwitterListener twitterListener)
         {
-            // TODO: Complete member initialization
-            this.tcpEndPointDetails = tcpEndPointDetails;
+            _tcpEndPointDetails = tcpEndPointDetails;
+            _twitterListener = twitterListener;
         }
+
         public void Start()
         {
-            throw new NotImplementedException();
+            _thread = new Thread(_twitterListener.Start);
+            _thread.Start();
+            _serverStatus = ServerStatus.Started;
         }
 
         public ServerStatus Status
         {
-            get { throw new NotImplementedException(); }
+            get { return _serverStatus; }
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _twitterListener.Dispose();
+            _serverStatus = ServerStatus.Stopped;
+            _thread.Join();
         }
 
         public ITwitterListener TwitterListener
         {
-            get { throw new NotImplementedException(); }
+            get { return _twitterListener; }
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TcpUtils;
 using Twitter;
+using Twitter.Contracts.Services;
 using TwitterTcpServerConsole.Services;
 
 namespace TwitterTcpServerConsole
@@ -14,8 +15,11 @@ namespace TwitterTcpServerConsole
         static void Main(string[] args)
         {
             Console.WriteLine("Starting Server...");
+            TcpEndPointDetails tcpEndpointDetails = new TcpEndPointDetails { IpAddress = "127.0.0.1", Port = 10101 };
             using (ITwitterServer twitterServer = new TwitterTcpServer(
-                new TcpEndPointDetails { IpAddress = "127.0.0.1", Port = 10101 }))
+                tcpEndpointDetails, new TwitterTcpListener(tcpEndpointDetails, 
+                    new TwitterHandler(), 
+                    new ConsoleLogger())))
             {
                 twitterServer.Start();
                 Console.WriteLine("Server started.");

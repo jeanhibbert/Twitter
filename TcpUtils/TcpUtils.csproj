@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleLogger.cs" />
     <Compile Include="TcpEndpointDetails.cs" />
     <Compile Include="TcpClientService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,6 +60,12 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Twitter\Twitter.Contracts.csproj">
+      <Project>{b21ca628-2898-42b0-a007-92e45cfab943}</Project>
+      <Name>Twitter.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
