@@ -1,5 +1,4 @@
 
-http://rehansaeed.co.uk/reactive-extensions-part1-replacing-events/
 - Complete Data layer implementation for persistance of Command History.
 	- Complete EF blog post
 - Implement Signal R implementation using Typescript
