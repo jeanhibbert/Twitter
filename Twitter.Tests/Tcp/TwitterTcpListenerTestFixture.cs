@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TcpUtils;
 using Twitter.Contracts;
-using Twitter.Contracts.Services;
+using Twitter.Services;
 using TwitterTcpServerConsole.Services;
 
 namespace Twitter.Tests
@@ -17,7 +17,8 @@ namespace Twitter.Tests
         [TestMethod]
         public void CanListenForTwitterClients()
         {
-            
+            ITwitterListener twitterListener = new TwitterTcpListener(null, new TwitterHandler(), new ConsoleLogger());
+            Assert.IsNotNull(twitterListener);
         }
     }
 }

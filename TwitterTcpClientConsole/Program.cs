@@ -13,7 +13,7 @@ namespace TwitterTcpClientConsole
         static void Main(string[] args)
         {
             Console.WriteLine("Opening connection...");
-            using (ITwitterClientService connection = new TcpClientService(10101, "localhost", new ConsoleLogger()))
+            using (ITwitterMessageService connection = new TcpMessageService(10101, "localhost", new ConsoleLogger()))
             {
                 connection.OnMessageRecieved.Subscribe(ReceiveMessage);
                 connection.Start();

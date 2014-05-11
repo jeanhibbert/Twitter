@@ -36,6 +36,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Reactive.Core, Version=2.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Core.2.2.4\lib\net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=2.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Interfaces.2.2.4\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Linq.2.2.4\lib\net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices">
+      <HintPath>..\packages\Rx-PlatformServices.2.2.4\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -50,14 +65,20 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="SignalR\TwitterTcpListenerTestFixture.cs" />
-    <Compile Include="SignalR\TwitterTcpServerTestFixture.cs" />
+    <Compile Include="Tcp\TwitterHandlerTestFixture.cs" />
+    <Compile Include="Tcp\TwitterTcpListenerTestFixture.cs" />
+    <Compile Include="Tcp\TwitterTcpServerTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tcp\TcpMessageServiceTestFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TcpUtils\TcpUtils.csproj">
       <Project>{6188850e-f592-4a0b-a54b-1fbbfe93e3f9}</Project>
       <Name>TcpUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Twitter.Core\Twitter.Services.csproj">
+      <Project>{d01eb6ef-918b-49c9-9b5e-3093921b4a55}</Project>
+      <Name>Twitter.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\Twitter.Model\Twitter.Model.csproj">
       <Project>{3cbd6771-0639-4082-92f8-be7f24df6e0e}</Project>
@@ -73,7 +94,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Tcp\" />
+    <Folder Include="SignalR\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Readme.txt = Readme.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twitter.Services", "Twitter.Core\Twitter.Services.csproj", "{D01EB6EF-918B-49C9-9B5E-3093921B4A55}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,10 @@ Global
 		{6188850E-F592-4A0B-A54B-1FBBFE93E3F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6188850E-F592-4A0B-A54B-1FBBFE93E3F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6188850E-F592-4A0B-A54B-1FBBFE93E3F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D01EB6EF-918B-49C9-9B5E-3093921B4A55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D01EB6EF-918B-49C9-9B5E-3093921B4A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D01EB6EF-918B-49C9-9B5E-3093921B4A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D01EB6EF-918B-49C9-9B5E-3093921B4A55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

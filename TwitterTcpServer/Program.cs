@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TcpUtils;
 using Twitter;
-using Twitter.Contracts.Services;
+using Twitter.Services;
 using TwitterTcpServerConsole.Services;
 
 namespace TwitterTcpServerConsole

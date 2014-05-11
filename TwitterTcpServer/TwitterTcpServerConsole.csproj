@@ -54,6 +54,10 @@
       <Project>{6188850e-f592-4a0b-a54b-1fbbfe93e3f9}</Project>
       <Name>TcpUtils</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Twitter.Core\Twitter.Services.csproj">
+      <Project>{d01eb6ef-918b-49c9-9b5e-3093921b4a55}</Project>
+      <Name>Twitter.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Twitter.Model\Twitter.Model.csproj">
       <Project>{3cbd6771-0639-4082-92f8-be7f24df6e0e}</Project>
       <Name>Twitter.Model</Name>

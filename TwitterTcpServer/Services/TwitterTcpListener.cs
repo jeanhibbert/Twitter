@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using TcpUtils;
 using Twitter.Contracts;
-using Twitter.Model;
 
 namespace TwitterTcpServerConsole.Services
 {
     public class TwitterTcpListener : ITwitterListener
     {
-
         private readonly ITwitterHandler _twitterHandler;
         private readonly TcpEndPointDetails _tcpEndpointDetails;
         private readonly ILogger _logger;
@@ -38,10 +31,10 @@ namespace TwitterTcpServerConsole.Services
                 TcpClient tcpClient = null;
                 while ((tcpClient = _tcpListener.AcceptTcpClient()) != null)
                 {
-                    ITwitterClientService twitterClient = new TcpClientService(tcpClient, _logger);
-                    _twitterHandler.TwitterClients.AddOrUpdate(twitterClient.Name, _ => twitterClient, (n, tc) => tc);
+                    ITwitterMessageService twitterClient = new TcpMessageService(tcpClient, _logger);
+                    _twitterHandler.Add(twitterClient);
                     twitterClient.Start();
-                    _logger.LogMessage("Listener added new Tcp Client : " + twitterClient.Name);
+                    _logger.LogMessage("Listener added new Tcp Client : " + twitterClient.SessionId);
                 }
                 _listenerStatus = ListenerStatus.Started;
             }

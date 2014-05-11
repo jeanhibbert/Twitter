@@ -9,11 +9,7 @@ namespace Twitter.Contracts
 {
     public interface ITwitterHandler : IDisposable
     {
-        ConcurrentDictionary<string, ITwitterClientService> TwitterClients
-        {
-            get;
-        }
-        void Post(ITwitterClientService twitterClient);
-        void Wall(ITwitterClientService twitterClient);
+        ConcurrentBag<ITwitterMessageService> TwitterClients { get; }
+        void Add(ITwitterMessageService twitterClientService);
     }
 }
